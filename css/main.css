@@ -1,0 +1,13 @@
+body {
+    font-family: "Open Sans", sans-serif;
+  }
+  header {
+    background-color: #f4f3f1;
+    display: flex;
+    padding: 15px;
+    padding-left: 41px;
+  }
+  .body {
+    display: flex;
+    flex: 1;
+  }
