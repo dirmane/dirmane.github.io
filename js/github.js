@@ -129,6 +129,10 @@ var log = (() => {
       isNodeList: (value) => {
         return Object.prototype.toString.call(value).slice(8, -1) === "NodeList";
       },
+      prepend: function (parentNode, newNode) {
+        parentNode.insertBefore(newNode, parentNode.firstChild);
+        return this;
+      },
       children: (node) => {
         try {
           return Array.prototype.slice.call(node.childNodes)
@@ -159,7 +163,6 @@ var log = (() => {
     //sorting data-to-sort elements 
     (function () {
 
-      function do_sort() {
         Array.prototype.slice.call(document.querySelectorAll('[data-to-sort]')).forEach((parent) => {
           
           var children = moddingTool.children(parent)
@@ -167,21 +170,30 @@ var log = (() => {
           const tmp = [];
 
           children.forEach((child) => {
-            log(trim(child.tagName ? child.innerText: String(child.textContent)) )
+           var text = (child.tagName  ? child.innerText.toLocaleLowerCase() : String(child.textContent)).trim();
+           
+            text && tmp.push({
+              tagName: child.tagName,
+              text: text,
+              node: child,
+            })
           }) 
+          
 
+          tmp.sort(function (a, b) {
 
+            if (a.text === b.text) {
+              return 0;
+          }
+          return a.text > b.text ? 1 : -1;
         })
-      } 
+        .map(function (n) {
+          log(n.node.innerText)
+          moddingTool.append(parent, n.node);
+        });
+        }) 
 
     })();
 
   
-    function trim(string, charlist, direction) {
-      direction = direction || "rl";
-      charlist = (charlist || "").replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
-      charlist = charlist || " \\n";
-      direction.indexOf("r") + 1 && (string = string.replace(new RegExp("^(.*?)[" + charlist + "]*$", "gm"), "$1"));
-      direction.indexOf("l") + 1 && (string = string.replace(new RegExp("^[" + charlist + "]*(.*)$", "gm"), "$1"));
-      return string;
-    }
+   
