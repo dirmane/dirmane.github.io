@@ -78,7 +78,6 @@ var log = (() => {
       log.gray('abc')
        */
   
-    log.green("defined", "log & log[red|green|blue|gray]");
   })();
   
   // load common css and js
@@ -100,29 +99,9 @@ var log = (() => {
       head.appendChild(style);
     });
   
-    log.blue("executed", "adding extra styles");
+    log.blue("DOMLoaded", "Styles loaded");
   })();
 
-  (function () {
-    // <link rel="stylesheet" href="../../css/normalize.css">
-  
-    ["/css/normalize.css", "/css/main.css", "//fonts.googleapis.com/css?family=Open+Sans:300,400"].forEach(function (u) {
-      // https://stackoverflow.com/a/524721
-      var head = document.head || document.getElementsByTagName("head")[0],
-        style = document.createElement("link");
-  
-      // style.type = 'text/css';
-  
-      style.setAttribute("rel", "stylesheet");
-  
-      style.setAttribute("href", u);
-  
-      head.appendChild(style);
-    });
-  
-    log.blue("executed", "adding extra styles");
-  })();
-  
   // Manipulationg DOM nodes by some methods
   var moddingTool = (function moddingTool() {
     function isObjectLike(value) {
@@ -147,9 +126,12 @@ var log = (() => {
       remove: (node) => {
         node.parentNode.removeChild(node);
       },
+      isNodeList: (value) => {
+        return Object.prototype.toString.call(value).slice(8, -1) === "NodeList";
+      },
       children: (node) => {
         try {
-          Object.prototype.toString.call(node.childNodes)
+          return Array.prototype.slice.call(node.childNodes)
         } catch (e) {
           throw new Error("ModdingTool error: children(): " + String(e))
         }
@@ -157,3 +139,49 @@ var log = (() => {
     }    
 
   })();
+
+  window.moddingTool = moddingTool;
+
+  log.green("defined", "window.moddingTool");
+
+    // editing head
+    (function () {
+      var el = document.createElement('a');
+
+      el.innerHTML = '<link rel="icon" type="image/x-icon" href="/favicon.png"> ';
+
+      Array.prototype.slice.call(el.children).forEach((node) => {
+        moddingTool.append(document.head, node);
+  });
+    })();
+    log.blue('DOMLoaded', 'Expanded document.head');
+    
+    //sorting data-to-sort elements 
+    (function () {
+
+      function do_sort() {
+        Array.prototype.slice.call(document.querySelectorAll('[data-to-sort]')).forEach((parent) => {
+          
+          var children = moddingTool.children(parent)
+           
+          const tmp = [];
+
+          children.forEach((child) => {
+            log(trim(child.tagName ? child.innerText: String(child.textContent)) )
+          }) 
+
+
+        })
+      } 
+
+    })();
+
+  
+    function trim(string, charlist, direction) {
+      direction = direction || "rl";
+      charlist = (charlist || "").replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+      charlist = charlist || " \\n";
+      direction.indexOf("r") + 1 && (string = string.replace(new RegExp("^(.*?)[" + charlist + "]*$", "gm"), "$1"));
+      direction.indexOf("l") + 1 && (string = string.replace(new RegExp("^[" + charlist + "]*(.*)$", "gm"), "$1"));
+      return string;
+    }

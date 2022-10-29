@@ -29,5 +29,5 @@ app.all('/ping', (req, res) => {
 
 
 app.listen(process.env.SERVER_PORT, () => {
-    console.log(`💀  Server is running http://${process.env.LOCAL_HOST}:${process.env.SERVER_PORT}`);
+    console.log(`🌍  Server is running http://${process.env.LOCAL_HOST}:${process.env.SERVER_PORT}`);
 });
