@@ -162,7 +162,7 @@ var log = (() => {
     
     //sorting data-to-sort elements 
     (function () {
-
+      window.sort_data = () => {
         Array.prototype.slice.call(document.querySelectorAll('[data-to-sort]')).forEach((parent) => {
           
           var children = moddingTool.children(parent)
@@ -188,12 +188,34 @@ var log = (() => {
           return a.text > b.text ? 1 : -1;
         })
         .map(function (n) {
-          log(n.node.innerText)
+
           moddingTool.append(parent, n.node);
         });
         }) 
-
+        log.blue("Loaded", "Sorting [data-to-sort]")
+      }
+    })();
+    (async function () {
+       await window.sort_data();
     })();
 
+    (function () {
+      document.querySelector("body > header") ||
+        (function () {
+          var body = document.body;
+    
+          
+            var header = document.createElement("header");
+    
+            header.innerHTML = `
+           <a href="/index.html">dirmane.github.io</a>
+           `    
+            moddingTool.prepend(body, header);
+          
+    
+          log.blue("DOMLoaded", "Header loading");
+        })();
+    
+    })();
   
    
