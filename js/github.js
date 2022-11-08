@@ -196,6 +196,33 @@ var log = (() => {
       }
     })();
     (async function () {
+      async function loadJs(name , loc) {
+        if(typeof loc !== "string") {
+          throw new Error("loadJs error: location mark have to be string for " + name)
+        }
+
+        var head = document.head || document.getElementsByTagName("head")[0], script = document.createElement('script');
+
+        script.setAttribute('src', loc);
+        head.appendChild(script);
+        
+      }
+
+      try {
+        loadJs('ace', "lib/ace-builds-1.5.0/src-min-noconflict/ace.js");
+
+        log.blue("Loaded", "loadJs libs loaded")
+      } catch (e) {
+        throw new Error("loadJs err: load event fail");
+      }
+
+     
+      var editor = ace.edit("editor");
+      editor.setTheme("ace/theme/monokai");
+      editor.session.setMode("ace/mode/javascript");
+      
+
+
        await window.sort_data();
     })();
 
