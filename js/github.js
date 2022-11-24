@@ -216,6 +216,7 @@ var log = (() => {
         throw new Error("loadJs err: load event fail");
       }
 
+      
 
        await window.sort_data();
     })();
