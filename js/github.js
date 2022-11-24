@@ -209,18 +209,12 @@ var log = (() => {
       }
 
       try {
-        loadJs('ace', "lib/ace-builds-1.5.0/src-min-noconflict/ace.js");
+        loadJs('ace', "https://cdnjs.cloudflare.com/ajax/libs/ace/1.13.1/ace.js");
 
         log.blue("Loaded", "loadJs libs loaded")
       } catch (e) {
         throw new Error("loadJs err: load event fail");
       }
-
-     
-      var editor = ace.edit("editor");
-      editor.setTheme("ace/theme/monokai");
-      editor.session.setMode("ace/mode/javascript");
-      
 
 
        await window.sort_data();
@@ -244,5 +238,13 @@ var log = (() => {
         })();
     
     })();
+
+    (function () {
+      window.doace = () => {
+        ace.edit(document.querySelector('#editor', {
+          theme: 'ace/theme/cobalt',
+      }))
+      }
+    })()
   
    
