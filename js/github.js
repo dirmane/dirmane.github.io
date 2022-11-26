@@ -195,28 +195,50 @@ var log = (() => {
         log.blue("Loaded", "Sorting [data-to-sort]")
       }
     })();
+
+    
+
     (async function () {
-      async function loadJs(name , loc) {
-        if(typeof loc !== "string") {
-          throw new Error("loadJs error: location mark have to be string for " + name)
-        }
-
-        var head = document.head || document.getElementsByTagName("head")[0], script = document.createElement('script');
-
-        script.setAttribute('src', loc);
-        head.appendChild(script);
-        
+      async function loadJs(name, url, test) {
+        return new Promise((resolve, reject) => {
+          if (typeof test !== "function") {
+            throw new Error("loadJs error: test should be a function for " + name + " async loader");
+          }
+    
+          if (typeof url !== "string") {
+            throw new Error("loadJs error: url should be a string for " + name + " async loader");
+          }
+    
+          // https://stackoverflow.com/a/524721
+          var head = document.head || document.getElementsByTagName("head")[0],
+            script = document.createElement("script");
+    
+          var handler = setInterval(function () {
+            if (test()) {
+              clearInterval(handler);
+    
+              log.yellow("loadJs", `${name} loaded`);
+    
+              resolve();
+            }
+          }, 100);
+    
+          script.setAttribute("src", url);
+    
+          head.appendChild(script);
+        });
       }
-
-      try {
-        loadJs('ace', "https://cdnjs.cloudflare.com/ajax/libs/ace/1.13.1/ace.js");
-
-        log.blue("Loaded", "loadJs libs loaded")
-      } catch (e) {
-        throw new Error("loadJs err: load event fail");
-      }
-
       
+        
+      await loadJs('ace', "lib/ace-builds-1.5.0/src-min-noconflict/ace.js", () => {
+          try {
+            return typeof window.ace.edit === "function";
+          } catch (e) {}
+            return false
+       })
+
+  
+       await window.doace()
 
        await window.sort_data();
     })();
@@ -240,12 +262,12 @@ var log = (() => {
     
     })();
 
-    (function () {
-      window.doace = () => {
-        ace.edit(document.querySelector('#editor', {
-          theme: 'ace/theme/cobalt',
-      }))
-      }
+    (function ()  {
+      window.doace = () => { 
+            ace.edit(document.querySelector('#editor', {
+            theme: 'ace/theme/cobalt',
+        }))
+        }
     })()
   
    
