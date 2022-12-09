@@ -202,11 +202,11 @@ var log = (() => {
       async function loadJs(name, url, test) {
         return new Promise((resolve, reject) => {
           if (typeof test !== "function") {
-            throw new Error("loadJs error: test should be a function for " + name + " async loader");
+            throw new Error("loadJs error: test should be a function for " + name);
           }
     
           if (typeof url !== "string") {
-            throw new Error("loadJs error: url should be a string for " + name + " async loader");
+            throw new Error("loadJs error: url should be a string for " + name);
           }
     
           // https://stackoverflow.com/a/524721
@@ -264,6 +264,10 @@ var log = (() => {
 
     (function ()  {
       window.doace = () => { 
+
+        Array.prototype.slice.call(document.querySelectorAll('[dlang]')).forEach((el) => {
+          log(el)
+        })
             ace.edit(document.querySelector('#editor', {
             theme: 'ace/theme/cobalt',
         }))
