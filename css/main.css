@@ -11,18 +11,28 @@ body {
   flex-direction: column;
 }
 .layout a {
-  color: #0366d6;
   text-decoration: none;
+  color: #fafafa;
 }
 .layout a:hover {
   text-decoration: underline;
 }
 header {
-  background-color: #f4f3f1;
+  background-color: #333;
+  line-height: 1.5;
+  color: #fafafa;
+  font-size: 16px;
   display: flex;
   padding: 15px;
   padding-left: 41px;
+  max-height: 24px;
 }
+header > a {
+  margin-left: 15px;
+  text-decoration: none;
+  color: inherit;
+}
+
 .body {
   display: flex;
   flex: 1;
