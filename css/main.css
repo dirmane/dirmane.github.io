@@ -12,7 +12,6 @@ body {
 }
 .layout a {
   text-decoration: none;
-  color: #fafafa;
 }
 .layout a:hover {
   text-decoration: underline;
@@ -24,7 +23,7 @@ header {
   font-size: 16px;
   display: flex;
   padding: 15px;
-  padding-left: 41px;
+
   max-height: 24px;
 }
 header > a {
@@ -199,4 +198,14 @@ h6 {
 #editor {
   width: 100%;
   min-height: auto;
+}
+.vscodion {
+  margin-left: auto;
+}
+header > svg {
+  font-weight: var(--base-text-weight-semibold, 600);
+  color: var(--color-header-logo);
+  align-items: center;
+
+  white-space: nowrap;
 }
