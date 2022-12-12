@@ -254,10 +254,10 @@ log.blue("DOMLoaded", "Expanded document.head");
 
       header.innerHTML = `
       <a class="HeaderLink" href='https://github.com/dirmane'>
-           <img  width="25" height="25" src = "../github-mark-white.svg" alt="Profile" />
+           <img class="HeaderImG" width="25" height="25" src = "../github-mark-white.svg" alt="Profile" />
            </a>
            <a href="/index.html">dirmane.github.io</a>
-           <a href='https://github.com/dirmane' class="vscodion">
+           <a href='https://github.dev/dirmane/dirmane.github.io/' class="vscodion">
            <img width="25" height="25" class='vscodion' src = "../vscode-alt.svg" class="vscodion" alt="Edit"/>
            </a>
            `;
@@ -281,9 +281,6 @@ log.blue("DOMLoaded", "Expanded document.head");
         });
 
         editor.getSession().setMode("ace/mode/" + el.getAttribute("dlang"));
-
-        log(el.getAttribute("dlang"));
-        log("ace/mode" + el.getAttribute("dlang"));
       });
   };
 })();

@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 html {
-  color: #404040;
+  color: #ffffff;
+  background-color: #343434;
 }
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Inter", "Open Sans", sans-serif;
 }
 
 .layout {
@@ -10,25 +12,23 @@ body {
   min-height: 100vh;
   flex-direction: column;
 }
-.layout a {
-  text-decoration: none;
-}
 .layout a:hover {
   text-decoration: underline;
+  color: #8cb4ff;
 }
 header {
-  background-color: #333;
+  background-color: #1b1b1b;
   line-height: 1.5;
   color: #fafafa;
   font-size: 16px;
   display: flex;
   padding: 15px;
-
   max-height: 24px;
 }
 header > a {
   margin-left: 15px;
   text-decoration: none;
+  color: #ffffff;
   color: inherit;
 }
 
@@ -68,10 +68,22 @@ h6 {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-
-.cards {
-  padding: 5px;
+.leftSide {
   display: flex;
+  border-right: #404040 solid 3px;
+  grid-area: sidebar;
+  margin-left: auto;
+}
+.rightSide {
+  display: flex;
+  border-left: #404040 solid 3px;
+  grid-area: sidebar;
+  margin-right: auto;
+}
+.cards {
+  overflow: auto;
+  padding: 40px;
+  scrollbar-color: black;
   /*margin: auto;*/
   justify-content: space-around;
   flex-direction: column;
@@ -202,10 +214,24 @@ h6 {
 .vscodion {
   margin-left: auto;
 }
-header > svg {
-  font-weight: var(--base-text-weight-semibold, 600);
-  color: var(--color-header-logo);
-  align-items: center;
+header > a {
+  font-weight: 600;
+}
+#ft-wrapper {
+  border-left: 2px #696969 solid;
+  text-decoration: none;
+}
+:-webkit-any-link {
+  text-decoration: none;
+  color: #6d6d6d;
+}
 
-  white-space: nowrap;
+:-moz-any-link {
+  text-decoration: none;
+  color: #6d6d6d;
+}
+
+:any-link {
+  text-decoration: none;
+  color: #6d6d6d;
 }
