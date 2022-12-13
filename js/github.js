@@ -105,6 +105,8 @@ var log = (() => {
   log.blue("DOMLoaded", "Styles loaded");
 })();
 
+window.log = log;
+
 // Manipulationg DOM nodes by some methods
 var moddingTool = (function moddingTool() {
   function isObjectLike(value) {

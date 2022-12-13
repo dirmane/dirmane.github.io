@@ -1,8 +1,7 @@
-const express = require('express');
-const path = require('path');
+const express = require("express");
+const path = require("path");
 const livereload = require("livereload");
 const connectLiveReload = require("connect-livereload");
-
 
 require("dotenv").config();
 
@@ -17,17 +16,16 @@ const app = express();
 
 app.use(connectLiveReload());
 
-
-
 const wweb = path.resolve(__dirname);
 
-app.use(express.static(wweb))
+app.use(express.static(wweb));
 
-app.all('/ping', (req, res) => {
-    res.end("Workings");
-})
-
+app.all("/ping", (req, res) => {
+  res.end("Workings");
+});
 
 app.listen(process.env.SERVER_PORT, () => {
-    console.log(`🌍  Server is running http://${process.env.LOCAL_HOST}:${process.env.SERVER_PORT}`);
+  console.log(
+    `🌍  Server is running http://${process.env.LOCAL_HOST}:${process.env.SERVER_PORT}`
+  );
 });
