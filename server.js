@@ -21,7 +21,7 @@ const wweb = path.resolve(__dirname);
 app.use(express.static(wweb));
 
 app.all("/ping", (req, res) => {
-  res.end("Workings");
+  res.end("Working");
 });
 
 app.listen(process.env.SERVER_PORT, () => {
