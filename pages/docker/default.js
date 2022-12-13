@@ -1,7 +1,7 @@
 const def = document.createElement("default");
 
 def.innerHTML = `
-    <h2 id="title">Main</h2>
+    <h1 id="title">Main</h1>
     <div class='editor' dlang="javascript">function foo(items) {
     var x = "All this is syntax highlighted";
     return x;
