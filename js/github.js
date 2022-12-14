@@ -131,6 +131,13 @@ var moddingTool = (function moddingTool() {
     remove: (node) => {
       node.parentNode.removeChild(node);
     },
+    replace: function (oldNode, newNode) {
+      oldNode.parentNode.replaceChild(newNode, oldNode);
+    },
+    empty: function (node) {
+      node.innerHTML = "";
+      return this;
+    },
     isNodeList: (value) => {
       return Object.prototype.toString.call(value).slice(8, -1) === "NodeList";
     },
