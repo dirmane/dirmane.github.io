@@ -38,6 +38,8 @@ var renderingTool = (function renderingTool() {
 
 window.renderingTool = renderingTool;
 
+log.green("defined", "window.renderingTool");
+
 (async function () {
   await renderingTool.none();
 
