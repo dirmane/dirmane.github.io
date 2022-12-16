@@ -1,4 +1,5 @@
-import { def } from "../pages/docker/default.js";
+import { def } from "../pages/default.js";
+import { docker } from "../pages/docker/docker.js";
 
 var renderingTool = (function renderingTool() {
   const articleBox = document.getElementById("inside");
@@ -12,26 +13,28 @@ var renderingTool = (function renderingTool() {
   }
   async function repleace(articleElement, ftElement) {
     new Promise((resolve, reject) => {
-      moddingTool.empty(articleBox) && moddingTool.empty(fastTravel);
+      moddingTool.empty(articleBox);
 
-      if (
-        moddingTool.children(articleBox) == [] &&
-        moddingTool.children(fastTravel) == []
-      )
-        resolve(moddingTool.nodeChildren(articleBox));
+      moddingTool.empty(fastTravel);
+
+      resolve();
     }).then(() => {
       articleRendering(articleElement);
+
       ftRendering(ftElement);
+
+      window.doace();
+
+      document.getElementById("fastTravel").textContent =
+        document.getElementById("title").textContent;
     });
   }
   return {
     default: async () => {
-      articleRendering(def.article);
-      ftRendering(def.ft);
-      window.doace();
+      repleace(def.article, def.ft);
     },
-    none: async () => {
-      repleace(document.createElement("null"), document.createElement("null"));
+    docker: async () => {
+      repleace(docker.article, docker.ft);
     },
   };
 })();
@@ -40,9 +43,4 @@ window.renderingTool = renderingTool;
 
 log.green("defined", "window.renderingTool");
 
-(async function () {
-  await renderingTool.none();
-
-  document.getElementById("fastTravel").textContent =
-    document.getElementById("title").textContent;
-})();
+renderingTool.default();
