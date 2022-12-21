@@ -72,6 +72,7 @@ h6 {
   display: flex;
   border-right: #404040 solid 3px;
   grid-area: sidebar;
+  max-width: 20%;
   margin-left: auto;
 }
 .rightSide {
@@ -79,6 +80,7 @@ h6 {
   border-left: #404040 solid 3px;
   grid-area: sidebar;
   margin-right: auto;
+  max-width: 20%;
 }
 .cards {
   overflow: auto;
@@ -137,6 +139,21 @@ h6 {
   }
   */
 
+@media screen and (max-width: 1199px) {
+  .rightSide {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+  }
+}
+@media screen and (max-width: 776px) {
+  .leftSide {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+  }
+}
+
 /* Landscape phone to portrait tablet */
 @media (min-width: 768px) {
 }
@@ -148,24 +165,10 @@ h6 {
 /* Large desktop */
 @media (min-width: 1200px) {
   .inside {
-    max-width: 900px;
+    max-width: 60%;
     margin: auto;
   }
 
-  .body {
-    /* 157x5567 top  x/2: 78px 2783px x/4: 39px 1391px x/3: 52px 1855px */
-    /* 167x1144 next x/2: 83px 572px x/4:  */
-    /*background-image: url("/img/tree-next.png");*/
-
-    /* temporary vvv */
-
-    background-image: url("/img/tree-top.png");
-    background-size: 52px 1855px;
-    /* temporary ^^^ */
-
-    /*background-size: 83px 572px;*/
-    background-repeat: repeat-y;
-  }
   /*
       .body::after {
           content: '';
@@ -234,4 +237,7 @@ header > a {
 :any-link {
   text-decoration: none;
   color: #6d6d6d;
+}
+article {
+  margin: 50px;
 }
