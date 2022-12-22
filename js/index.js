@@ -44,3 +44,21 @@ window.renderingTool = renderingTool;
 log.green("defined", "window.renderingTool");
 
 renderingTool.default();
+
+const phoneMenu = document.createElement("div");
+phoneMenu.innerHTML = `
+           <ul id="menu">
+           <li><a onclick="renderingTool.docker()">Docker</a></li>
+           </ul>
+`;
+phoneMenu.classList.add("menuWr");
+
+document
+  .getElementById("body")
+  .insertBefore(phoneMenu, document.getElementById("inside"));
+
+const phoneMenuCH = () => {
+  document.querySelector(".menuWr").classList.toggle("active");
+  document.getElementById("inside").classList.toggle("inactive");
+};
+window.phoneMenuCH = phoneMenuCH;
