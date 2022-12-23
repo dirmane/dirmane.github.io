@@ -1,3 +1,5 @@
+import Component from "../../js/core/component";
+
 const def = {
   article: document.createElement("article"),
   ft: document.createElement("ft"),

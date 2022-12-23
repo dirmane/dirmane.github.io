@@ -1,4 +1,4 @@
-import { Component } from "../../js/core/component";
+import Component from "../../js/core/component";
 
 const docker = {
   article: new Component(

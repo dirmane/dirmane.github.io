@@ -1,6 +1,6 @@
-class Component {
+export default class Component {
   constructor(type, className, codeIn) {
-    this.codeInject = codeIn;
+    this.codeIn = codeIn;
     this.className = className;
     this.type = type;
   }
@@ -17,5 +17,3 @@ class Component {
     return temp;
   }
 }
-
-export { Component };
