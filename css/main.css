@@ -256,6 +256,10 @@ article {
   height: 50%;
   background-color: #1b1b1b;
 }
+#menu li {
+  border-bottom: #343434 solid 0.5px;
+}
+
 .menuWr {
   display: none;
 }
@@ -270,7 +274,7 @@ article {
   display: block;
 }
 .menuWr {
-  width: 100%;
+  width: 92%;
 }
 #inside.inactive {
   display: none;

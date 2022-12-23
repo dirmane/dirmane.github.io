@@ -1,5 +1,6 @@
 import { def } from "../pages/default.js";
-import { docker } from "../pages/docker/docker.js";
+//import { docker } from "../pages/docker/docker.js";
+import { Component } from "./core/component.js";
 
 var renderingTool = (function renderingTool() {
   const articleBox = document.getElementById("inside");
@@ -34,7 +35,7 @@ var renderingTool = (function renderingTool() {
       repleace(def.article, def.ft);
     },
     docker: async () => {
-      repleace(docker.article, docker.ft);
+      repleace(docker.article.htmlComponent, docker.ft.htmlComponent);
     },
   };
 })();
@@ -45,17 +46,17 @@ log.green("defined", "window.renderingTool");
 
 renderingTool.default();
 
-const phoneMenu = document.createElement("div");
-phoneMenu.innerHTML = `
-           <ul id="menu">
-           <li><a onclick="renderingTool.docker()">Docker</a></li>
-           </ul>
-`;
-phoneMenu.classList.add("menuWr");
+const phoneMenu = new Component(
+  "div",
+  "menuWr",
+  `<ul id="mensu">
+${document.querySelector("#indexes").innerHTML}
+</ul>`
+);
 
 document
   .getElementById("body")
-  .insertBefore(phoneMenu, document.getElementById("inside"));
+  .insertBefore(phoneMenu.htmlComponent, document.getElementById("inside"));
 
 const phoneMenuCH = () => {
   document.querySelector(".menuWr").classList.toggle("active");

@@ -1,12 +1,12 @@
-const docker = {
-  article: document.createElement("article"),
-  ft: document.createElement("ft"),
-};
+import { Component } from "../../js/core/component";
 
-docker.article.innerHTML = `
-      <h1 id="title">Docker</h1>
-      <div class='editor' dlang="sh">function foo(items) {
-      
+const docker = {
+  article: new Component(
+    "article",
+    "article",
+    `<h1 id="title">Docker</h1>
+  <div class='editor' dlang="sh">function foo(items) {
+  
 # -i
 # -t
 # running in pipelines without -t
@@ -20,34 +20,34 @@ docker system df
 
 # determine image size
 docker system df -v | grep 695ab6fa12ce
-    # to get IMAGE ID
-    docker images | grep cypress/included
+# to get IMAGE ID
+docker images | grep cypress/included
 
 docker image prune -a --force --filter "until=480h"
 docker system prune --all --volumes --force
-    # from: https://docs.docker.com/config/pruning/
-    # even more: https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes
+# from: https://docs.docker.com/config/pruning/
+# even more: https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes
 docker volume prune
-  # pruning just volumes
+# pruning just volumes
 
 # print entrypoint of an image:
 docker inspect IMAGENAME | jq '.[0].ContainerConfig.Entrypoint[0]' -r
 docker image inspect IMAGENAME | jq '.[].Config.WorkingDir'
 
 docker container rm puppeteer-test -f
-    # stop and remove container immediately
+# stop and remove container immediately
 
 DOCKER_BUILDKIT=1 docker build . --platform linux/amd64 -f docker/Dockerfile -t xxx:latest
-    # https://github.com/docker/docker.github.io/issues/12231
+# https://github.com/docker/docker.github.io/issues/12231
 # passing env as is
 $ CYPRESS_VIDEO=false
 $ docker run --name name --rm -d -it -v $PWD:/e2e -w /e2e -e CYPRESS_VIDEO -e "PORT=8089" -p "8089:8089" --entrypoint="" cypress/included:3.2.0 node -v
 
 host.docker.internal
-    # from: https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds
-    g(Networking features in Docker Desktop for Mac Use cases and workarounds I WANT TO CONNECT FROM A CONTAINER TO A SERVICE ON THE HOST)
-    # on linux you can use:
-        https://stackoverflow.com/a/48547074
+# from: https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds
+g(Networking features in Docker Desktop for Mac Use cases and workarounds I WANT TO CONNECT FROM A CONTAINER TO A SERVICE ON THE HOST)
+# on linux you can use:
+    https://stackoverflow.com/a/48547074
 
 docker login https://docker-registry.xxx.com --username=yourhubusername --password=yourpassword
 
@@ -98,18 +98,19 @@ docker run -it project:node-multi_tl
 # checking healthcheck of container
 docker inspect --format "{{json .State.Health }}" cypress_app_container | jq
 # example of healtheck section in docker-compose (using 0s will not work for interval nor start_period, use 1s instead):
-  healthcheck: # https://docs.docker.com/compose/compose-file/compose-file-v3/#healthcheck ANS https://docs.docker.com/engine/reference/builder/#healthcheck
-    test: ["CMD", "node", "healthcheck.js"]
-    start_period: 1s
-    interval: 1s
-    timeout: 5s
-    retries: 3
+healthcheck: # https://docs.docker.com/compose/compose-file/compose-file-v3/#healthcheck ANS https://docs.docker.com/engine/reference/builder/#healthcheck
+test: ["CMD", "node", "healthcheck.js"]
+start_period: 1s
+interval: 1s
+timeout: 5s
+retries: 3
 
 docker inspect cypress_app | grep -A 5 -B 5 RestartPolicy
-  # based on https://docs.docker.com/config/containers/start-containers-automatically/
+# based on https://docs.docker.com/config/containers/start-containers-automatically/
 
-      }</div>
-      `;
-docker.ft.innerHTML = "<li>Usefull commands</li>";
+  }</div>`
+  ),
+  ft: new Component("ft", "ft", `<li>Usefull commands</li>`),
+};
 
 export { docker };
