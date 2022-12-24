@@ -1,10 +1,9 @@
-import Component from "../../js/core/component";
+import Component from "../../js/core/component.js";
 
-const docker = {
-  article: new Component(
-    "article",
-    "article",
-    `<h1 id="title">Docker</h1>
+const docker = new Component(
+  "article",
+  "article",
+  `<h1 id="title">Docker</h1>
   <div class='editor' dlang="sh">function foo(items) {
   
 # -i
@@ -109,8 +108,6 @@ docker inspect cypress_app | grep -A 5 -B 5 RestartPolicy
 # based on https://docs.docker.com/config/containers/start-containers-automatically/
 
   }</div>`
-  ),
-  ft: new Component("ft", "ft", `<li>Usefull commands</li>`),
-};
+);
 
 export { docker };
