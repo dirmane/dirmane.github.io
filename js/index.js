@@ -19,8 +19,10 @@ var renderingTool = (function renderingTool() {
 
       window.doace();
 
-      document.getElementById("fastTravel").textContent =
+      document.querySelector(".fastTravel").textContent =
         document.getElementById("title").textContent;
+
+      window.ft();
     });
   }
   return {
@@ -37,6 +39,7 @@ window.renderingTool = renderingTool;
 log.green("defined", "window.renderingTool");
 
 renderingTool.default();
+window.ft();
 
 const phoneMenu = new Component(
   "div",

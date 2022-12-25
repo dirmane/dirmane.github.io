@@ -289,7 +289,6 @@ log.blue("DOMLoaded", "Expanded document.head");
         const editor = ace.edit(el);
 
         editor.setTheme("ace/theme/nord_dark");
-
         editor.setOptions({
           maxLines: editor.session.getLength(),
         });
@@ -301,78 +300,47 @@ log.blue("DOMLoaded", "Expanded document.head");
 
 (function () {
   window.ft = function () {
-    if (0 == 0) {
-      var ft = document.querySelector("div.cards.toc");
+    var ft = document.querySelector("div.cards.ft");
 
-      if (!ft) {
-        ft = document.createElement("div");
+    if (!ft) {
+      ft = document.createElement("div");
 
-        ft.classList.add("cards");
+      ft.classList.add("cards");
 
-        ft.classList.add("ft");
+      ft.classList.add("ft");
+    }
+
+    (function () {
+      var ul = ft.querySelector("ul");
+
+      var found = true;
+
+      if (!ul) {
+        found = false;
+
+        ul = document.createElement("ul");
       }
 
-      // Table of content
-      (function () {
-        var head = ft.querySelector("h1");
+      Array.prototype.slice
+        .call(document.querySelector(".article").querySelectorAll("h2[id]"))
+        .forEach(function (el) {
+          var a = document.createElement("a");
 
-        if (!head) {
-          head = document.createElement("h1");
+          a.setAttribute("href", "#" + el.getAttribute("id"));
 
-          moddingTool.append(ft, head);
-        }
+          a.innerText = el.innerText;
 
-        if (!ft.innerText) {
-          head.innerText =
-            document.querySelector("#title").textContent || "Fast Travel";
-        }
-      })();
+          var li = document.createElement("li");
 
-      (function () {
-        var ul = ft.querySelector("ul");
+          moddingTool.append(li, a);
 
-        var found = true;
+          moddingTool.append(ul, li);
+        });
 
-        if (!ul) {
-          found = false;
-
-          ul = document.createElement("ul");
-        }
-
-        Array.prototype.slice
-          .call(document.querySelector(".article").querySelectorAll("h2[id]"))
-          .forEach(function (el) {
-            var a = document.createElement("a");
-
-            a.setAttribute("href", "#" + el.getAttribute("id"));
-
-            a.innerText = el.innerText;
-
-            var li = document.createElement("li");
-
-            moddingTool.append(li, a);
-
-            moddingTool.append(ul, li);
-          });
-
-        if (!found) {
-          moddingTool.append(ft, ul);
-        }
-      })();
-
-      log.blue(
-        "TOC",
-        "[toc] found",
-        "[triggered in domcontentloaded.js, delayed async due to DOMContentLoaded and window.async.permalink.then]"
-      );
-    } else {
-      log.blue(
-        "TOC",
-        "[toc] not found",
-        "[triggered in domcontentloaded.js, delayed async due to window.async.permalink.then]"
-      );
-    }
+      if (!found) {
+        moddingTool.append(ft, ul);
+      }
+    })();
   };
-
-  log.green("defined", "window.toc");
+  log.green("defined", "window.ft");
 })();

@@ -3,111 +3,80 @@ import Component from "../../js/core/component.js";
 const docker = new Component(
   "article",
   "article",
-  `<h1 id="title">Docker</h1>
-  <div class='editor' dlang="sh">function foo(items) {
-  
-# -i
-# -t
-# running in pipelines without -t
-$ docker run --user $(id -u):$(id -g) -i image_name command args
-$ CURRENT_UID=$(id -u):$(id -g) docker-compose up
+  `
+  <h1 id="title">Docker</h1>
+  <h2 id='docker-compose'>Docker Compose</h2>
+  <hr>
+  Docker Compose is a tool that was developed to help define and share multi-container applications. With Compose, we can create a YAML file to define the services and with a single command, can spin everything up or tear it all down.
+  The big advantage of using Compose is you can define your application stack in a file, keep it at the root of your project repo (it’s now version controlled), and easily enable someone else to contribute to your project. Someone would only need to clone your repo and start the compose app. In fact, you might see quite a few projects on GitHub/GitLab doing exactly this now.
+  <h3>Create the Compose file</h3>
 
-docker history --format "\t{{.Size}}\t\t{{.CreatedBy}}" 1de239ccac3e --no-trunc
+  At the root of the app project, create a file named docker-compose.yml.
 
-# determine docker resources usage
-docker system df
+  In the compose file, we’ll start off by defining the list of services (or containers) we want to run as part of our application.
 
-# determine image size
-docker system df -v | grep 695ab6fa12ce
-# to get IMAGE ID
-docker images | grep cypress/included
+  <h3>Define the service</h3>
 
-docker image prune -a --force --filter "until=480h"
-docker system prune --all --volumes --force
-# from: https://docs.docker.com/config/pruning/
-# even more: https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes
-docker volume prune
-# pruning just volumes
+  <div dlang="sh">
+  services:
+  app:
+    image: node:18-alpine
+    command: sh -c "yarn install && yarn run dev"
+    ports:
+      - 3000:3000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: todos
 
-# print entrypoint of an image:
-docker inspect IMAGENAME | jq '.[0].ContainerConfig.Entrypoint[0]' -r
-docker image inspect IMAGENAME | jq '.[].Config.WorkingDir'
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todos
 
-docker container rm puppeteer-test -f
-# stop and remove container immediately
+volumes:
+  todo-mysql-data:
+  </div>  
+  <h2 id='dockerfile'>Dockerfile</h2>
+  <hr>
+  Docker builds images automatically by reading the instructions from a <strong>Dockerfile</strong> - a text file that contains all commands, in order, needed to build a given image. A <strong>Dockerfile</strong> adheres to a specific format and set of instructions which you can find at Dockerfile reference.
+  <h3>Dockerfile for a Go application</h3>
+  <div dlang='sh'>
+  # syntax=docker/dockerfile:1
+FROM golang:1.16-alpine AS build
 
-DOCKER_BUILDKIT=1 docker build . --platform linux/amd64 -f docker/Dockerfile -t xxx:latest
-# https://github.com/docker/docker.github.io/issues/12231
-# passing env as is
-$ CYPRESS_VIDEO=false
-$ docker run --name name --rm -d -it -v $PWD:/e2e -w /e2e -e CYPRESS_VIDEO -e "PORT=8089" -p "8089:8089" --entrypoint="" cypress/included:3.2.0 node -v
+# Install tools required for project
+# Run docker build --no-cache . to update dependencies
+RUN apk add --no-cache git
+RUN go get github.com/golang/dep/cmd/dep
 
-host.docker.internal
-# from: https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds
-g(Networking features in Docker Desktop for Mac Use cases and workarounds I WANT TO CONNECT FROM A CONTAINER TO A SERVICE ON THE HOST)
-# on linux you can use:
-    https://stackoverflow.com/a/48547074
+# List project dependencies with Gopkg.toml and Gopkg.lock
+# These layers are only re-built when Gopkg files are updated
+COPY Gopkg.lock Gopkg.toml /go/src/project/
+WORKDIR /go/src/project/
+# Install library dependencies
+RUN dep ensure -vendor-only
 
-docker login https://docker-registry.xxx.com --username=yourhubusername --password=yourpassword
+# Copy the entire project and build it
+# This layer is rebuilt when a file changes in the project directory
+COPY . /go/src/project/
+RUN go build -o /bin/project
 
-# https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#build-an-image-using-a-dockerfile-from-stdin-without-sending-build-context
-# inline Dockerfile
-cat <<EOF | docker build --rm -t local_c7_systemd -
-FROM centos:7
-...
-EOF
+# This results in a single layer image
+FROM scratch
+COPY --from=build /bin/project /bin/project
+ENTRYPOINT ["/bin/project"]
+CMD ["--help"]
+  </div>
 
-docker run --rm -it local_c7_systemd bash
-
-# pushing image
-# nvm ls-remote
-docker run -it privaterepo.com/node:13.14.0-alpine sh
-docker pull node:13.14.0-alpine
-docker tag node:13.14.0-alpine privaterepo.com/node:13.14.0-alpine
-docker push privaterepo.com/node:13.14.0-alpine
-
-# run inline bash script in container
-# to run pod without stopping
-docker run -i --name test --rm -d alpine:3.14.2 tail -f /dev/null
-# then run script
-cat <<EOF | docker exec -i test /bin/sh
-echo a b c | awk '{print \$2}'
-EOF
-# or run as run straight away
-cat <<EOF | docker run -i --name test --rm alpine:3.14.2 /bin/sh
-echo a b c | awk '{print \$2}'
-EOF
-
-cat <<EOF | docker build --progress=plain -t project:node-multi_tl -
-FROM node:14.17.4-alpine AS base_stage
-RUN apk --no-cache add curl
-RUN apk update && apk upgrade && apk add curl
-ENV TEST_ENV="test..."
-ENTRYPOINT ["tail", "-f", "/dev/null"]
-EOF
-docker run -it project:node-multi_tl
-# if you need to restrict amount of memory or CPU power the
-# container can use, see
-# https://docs.docker.com/config/containers/resource_constraints/
-# restrict total memory
-# --memory=600m --memory-swap=600m
-# restrict CPU share
-# --cpus=0.3
-
-# checking healthcheck of container
-docker inspect --format "{{json .State.Health }}" cypress_app_container | jq
-# example of healtheck section in docker-compose (using 0s will not work for interval nor start_period, use 1s instead):
-healthcheck: # https://docs.docker.com/compose/compose-file/compose-file-v3/#healthcheck ANS https://docs.docker.com/engine/reference/builder/#healthcheck
-test: ["CMD", "node", "healthcheck.js"]
-start_period: 1s
-interval: 1s
-timeout: 5s
-retries: 3
-
-docker inspect cypress_app | grep -A 5 -B 5 RestartPolicy
-# based on https://docs.docker.com/config/containers/start-containers-automatically/
-
-  }</div>`
+  `
 );
 
 export { docker };
