@@ -39,22 +39,23 @@ window.renderingTool = renderingTool;
 log.green("defined", "window.renderingTool");
 
 renderingTool.default();
-window.ft();
 
-const phoneMenu = new Component(
-  "div",
-  "menuWr",
-  `<ul id="menu">
-${document.querySelector("#indexes").innerHTML}
-</ul>`
-);
+(function () {
+  const phoneMenu = new Component(
+    "div",
+    "menuWr",
+    `<ul id="menu">
+  ${document.querySelector("#indexes").innerHTML}
+  </ul>`
+  );
+  document
+    .getElementById("body")
+    .insertBefore(phoneMenu.htmlComponent, document.getElementById("inside"));
+})();
 
-document
-  .getElementById("body")
-  .insertBefore(phoneMenu.htmlComponent, document.getElementById("inside"));
-
-const phoneMenuCH = () => {
-  document.querySelector(".menuWr").classList.toggle("active");
-  document.getElementById("inside").classList.toggle("inactive");
-};
-window.phoneMenuCH = phoneMenuCH;
+(function () {
+  window.phc = () => {
+    document.querySelector(".menuWr").classList.toggle("active");
+    document.getElementById("inside").classList.toggle("inactive");
+  };
+})();

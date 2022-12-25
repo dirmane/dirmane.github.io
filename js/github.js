@@ -268,7 +268,7 @@ log.blue("DOMLoaded", "Expanded document.head");
            <img class="HeaderImG" width="25" height="25" src = "../github-mark-white.svg" alt="Profile" />
            </a>
            <a href="/index.html">dirmane.github.io</a>
-           <a onclick="phoneMenuCH()" href='#' class="menucodion">
+           <a onclick="window.phc()" href='#' class="menucodion">
            <img width="25" height="25"  src = "../menu.svg" class="menucodion" alt="Menu"/>
            </a>
            <a href='https://github.dev/dirmane/dirmane.github.io/' class="vscodion">
