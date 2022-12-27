@@ -4,7 +4,7 @@ const python = new Component(
   "article",
   "article",
   `<h1 id="title">Python</h1>
-  <h2 id="learn-the-basics">Learn The Basisc</h2><hr/>
+  <h2 id="learn-the-basics">Learn The Basics</h2><hr/>
   Python is a high-level, interpreted, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation. Python is dynamically-typed and garbage-collected
   <strong>Best free websites</strong> to learn : basic syntax, Variables, Conditionals, Exceptions, Functions, Lists and rest of the basic syntax are <a href="https://www.freecodecamp.org">FreeCodeCamp</a>, <a href="https://www.geeksforgeeks.org/python-programming-language/?ref=shm">geeksforgeeks</a> and official documentation of python <a href="https://www.python.org/">Python</a>
   <h3>Basic Syntax</h3>
@@ -19,9 +19,9 @@ const python = new Component(
   <h4>Conditionals</h4>
   Conditional Statements in Python perform different actions depending on whether a specific condition evaluates to <code>true</code> or <code>false</code>. Conditional Statements are handled by <code>IF-ELIF-ELSE</code> statements and <code>MATCH-CASE</code> statements in Python.
   <div class='editor'  dlang="python">
-  if(1>0)
-    print('x')
-  // x
+  if 0 < 1:                            # Truthy
+...     print('yes')
+  # yes
   </div>
   <h4>Typecasting</h4>
   The process of converting the value of one data type (integer, string, float, etc.) to another data type is called type conversion. Python has two types of type conversion: Implicit and Explicit.
