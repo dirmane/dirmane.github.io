@@ -321,6 +321,8 @@ log.blue("DOMLoaded", "Expanded document.head");
         ul = document.createElement("ul");
       }
 
+      moddingTool.empty(ul);
+
       Array.prototype.slice
         .call(document.querySelector(".article").querySelectorAll("h2[id]"))
         .forEach(function (el) {

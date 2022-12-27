@@ -8,11 +8,11 @@ export default class Component {
     return this.codeConv();
   }
   codeConv() {
-    const temp = document.createElement(`${this.type}`);
+    const temp = document.createElement(this.type);
 
-    temp.classList.add(`${this.className}`);
+    temp.classList.add(this.className);
 
-    temp.innerHTML = `${this.codeIn}`;
+    temp.innerHTML = this.codeIn;
 
     return temp;
   }

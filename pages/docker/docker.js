@@ -17,7 +17,7 @@ const docker = new Component(
 
   <h3>Define the service</h3>
 
-  <div dlang="sh">
+  <div dlang="sh" class='editor'>
   services:
   app:
     image: node:18-alpine
@@ -46,9 +46,9 @@ volumes:
   </div>  
   <h2 id='dockerfile'>Dockerfile</h2>
   <hr>
-  Docker builds images automatically by reading the instructions from a <strong>Dockerfile</strong> - a text file that contains all commands, in order, needed to build a given image. A <strong>Dockerfile</strong> adheres to a specific format and set of instructions which you can find at Dockerfile reference.
+  Docker builds images automatically by reading the instructions from a <code>Dockerfile</code> - a text file that contains all commands, in order, needed to build a given image. A <code>Dockerfile</code> adheres to a specific format and set of instructions which you can find at Dockerfile reference.
   <h3>Dockerfile for a Go application</h3>
-  <div dlang='sh'>
+  <div dlang='sh' class='editor'>
   # syntax=docker/dockerfile:1
 FROM golang:1.16-alpine AS build
 

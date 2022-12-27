@@ -220,9 +220,18 @@ h6 {
 }
 
 /* copy ^^^ */
-#editor {
+.editor {
   width: 100%;
   min-height: auto;
+  border-radius: 4px;
+  margin: 10px;
+}
+code {
+  background: #1e1e3f;
+  color: #9efeff;
+  padding: 3px 5px;
+  font-size: 14px;
+  border-radius: 3px;
 }
 .vscodion {
   margin-left: auto;

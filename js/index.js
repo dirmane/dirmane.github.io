@@ -1,5 +1,6 @@
 import { def } from "../pages/default.js";
 import { docker } from "../pages/docker/docker.js";
+import { python } from "../pages/python/python.js";
 import Component from "./core/component.js";
 
 var renderingTool = (function renderingTool() {
@@ -31,6 +32,9 @@ var renderingTool = (function renderingTool() {
     },
     docker: async () => {
       repleace(docker.htmlComponent);
+    },
+    python: async () => {
+      repleace(python.htmlComponent);
     },
   };
 })();
